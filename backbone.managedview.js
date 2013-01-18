@@ -26,6 +26,8 @@
       this.beforeRender = __bind(this.beforeRender, this);
 
       this.insert = __bind(this.insert, this);
+
+      this.template = __bind(this.template, this);
       return ManagedView.__super__.constructor.apply(this, arguments);
     }
 
@@ -33,6 +35,8 @@
       this.views = options.views || {};
       return ManagedView.__super__._configure.apply(this, arguments);
     };
+
+    ManagedView.prototype.template = function() {};
 
     ManagedView.prototype.insert = function() {};
 

@@ -3,6 +3,8 @@ class Backbone.ManagedView extends Backbone.View
     @views = options.views || {}
     super
 
+  template: =>
+
   # Determine how view element will be inserted to the DOM
   insert: =>
 
