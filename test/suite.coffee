@@ -8,12 +8,11 @@ $ =>
 
   module "render",
     setup: =>
-      $("body").append("<div id='app'></div>")
       class @Layout extends Backbone.ManagedView
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
         insert: =>
-          $("#app").replaceWith @el
+          $("body").append @el
         beforeRender: =>
           @beforeRenderCalled = true
         afterRender: =>
@@ -21,7 +20,17 @@ $ =>
 
       class @Header extends Backbone.ManagedView
         tagName: "header"
-        template: _.template("<p>header</p>")
+        template: _.template("<p>header</p><div id='items'></div>")
+        beforeRender: =>
+          _(@views["#items"]).invoke "remove"
+          @views["#items"] = []
+          @views["#items"].push new Item
+          @views["#items"].push new Item
+
+      class @Item extends Backbone.ManagedView
+        className: "item"
+        template: _.template("<p>item name</p>")
+
     teardown: =>
       $("#app").remove()
 
@@ -36,6 +45,11 @@ $ =>
     layout.render()
     equal $("#app #content").html(), "test"
     equal $("#app header p").html(), "header"
+    equal $("#app header #items .item").length, 2
+    layout.render()
+    equal $("#app #content").html(), "test"
+    equal $("#app header p").html(), "header"
+    equal $("#app header #items .item").length, 2
 
   test "beforeRender", =>
     layout = new Layout

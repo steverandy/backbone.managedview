@@ -15,7 +15,6 @@
     });
     module("render", {
       setup: function() {
-        $("body").append("<div id='app'></div>");
         _this.Layout = (function(_super) {
 
           __extends(Layout, _super);
@@ -34,7 +33,7 @@
           Layout.prototype.template = _.template("<header></header><div id='content'>test</div>");
 
           Layout.prototype.insert = function() {
-            return $("#app").replaceWith(this.el);
+            return $("body").append(this.el);
           };
 
           Layout.prototype.beforeRender = function() {
@@ -48,19 +47,42 @@
           return Layout;
 
         })(Backbone.ManagedView);
-        return _this.Header = (function(_super) {
+        _this.Header = (function(_super) {
 
           __extends(Header, _super);
 
           function Header() {
+            _this.beforeRender = __bind(_this.beforeRender, this);
             return Header.__super__.constructor.apply(this, arguments);
           }
 
           Header.prototype.tagName = "header";
 
-          Header.prototype.template = _.template("<p>header</p>");
+          Header.prototype.template = _.template("<p>header</p><div id='items'></div>");
+
+          Header.prototype.beforeRender = function() {
+            _(this.views["#items"]).invoke("remove");
+            this.views["#items"] = [];
+            this.views["#items"].push(new Item);
+            return this.views["#items"].push(new Item);
+          };
 
           return Header;
+
+        })(Backbone.ManagedView);
+        return _this.Item = (function(_super) {
+
+          __extends(Item, _super);
+
+          function Item() {
+            return Item.__super__.constructor.apply(this, arguments);
+          }
+
+          Item.prototype.className = "item";
+
+          Item.prototype.template = _.template("<p>item name</p>");
+
+          return Item;
 
         })(Backbone.ManagedView);
       },
@@ -80,7 +102,12 @@
       layout.views["header"] = new Header;
       layout.render();
       equal($("#app #content").html(), "test");
-      return equal($("#app header p").html(), "header");
+      equal($("#app header p").html(), "header");
+      equal($("#app header #items .item").length, 2);
+      layout.render();
+      equal($("#app #content").html(), "test");
+      equal($("#app header p").html(), "header");
+      return equal($("#app header #items .item").length, 2);
     });
     test("beforeRender", function() {
       var layout;
