@@ -18,16 +18,6 @@
       this.remove = __bind(this.remove, this);
 
       this.render = __bind(this.render, this);
-
-      this.afterRemove = __bind(this.afterRemove, this);
-
-      this.afterRender = __bind(this.afterRender, this);
-
-      this.beforeRender = __bind(this.beforeRender, this);
-
-      this.insert = __bind(this.insert, this);
-
-      this.template = __bind(this.template, this);
       return ManagedView.__super__.constructor.apply(this, arguments);
     }
 
@@ -36,22 +26,18 @@
       return ManagedView.__super__._configure.apply(this, arguments);
     };
 
-    ManagedView.prototype.template = function() {};
-
-    ManagedView.prototype.insert = function() {};
-
-    ManagedView.prototype.beforeRender = function() {};
-
-    ManagedView.prototype.afterRender = function() {};
-
-    ManagedView.prototype.afterRemove = function() {};
-
     ManagedView.prototype.render = function() {
-      this.beforeRender();
-      this.insert();
-      this.$el.html(this.template(this));
+      if (typeof this.beforeRender === "function") {
+        this.beforeRender();
+      }
+      if (typeof this.insert === "function") {
+        this.insert();
+      }
+      this.$el.html(typeof this.template === "function" ? this.template(this) : void 0);
       this.renderViews();
-      this.afterRender();
+      if (typeof this.afterRender === "function") {
+        this.afterRender();
+      }
       this.trigger("render");
       return this;
     };
@@ -59,7 +45,9 @@
     ManagedView.prototype.remove = function() {
       ManagedView.__super__.remove.apply(this, arguments);
       this.removeViews();
-      this.afterRemove();
+      if (typeof this.afterRemove === "function") {
+        this.afterRemove();
+      }
       this.trigger("remove");
       return this;
     };
@@ -68,7 +56,7 @@
       var views,
         _this = this;
       views = [];
-      _(this.views).each(function(view, viewName) {
+      _(this.views).each(function(view, name) {
         var viewChild, _i, _len, _results;
         if (_(view).isArray()) {
           _results = [];
@@ -86,20 +74,20 @@
 
     ManagedView.prototype.renderViews = function() {
       var _this = this;
-      return _(this.views).each(function(view, selector) {
+      return _(this.views).each(function(view, name) {
         var childView, _i, _len, _results;
         if (_(view).isArray()) {
           _results = [];
           for (_i = 0, _len = view.length; _i < _len; _i++) {
             childView = view[_i];
-            if (!(typeof childView.insert === "function" ? childView.insert(_this.$(selector)[0]) : void 0)) {
-              _this.$(selector).append(childView.el);
+            if (!(typeof childView.insert === "function" ? childView.insert(_this.$(name)[0]) : void 0)) {
+              _this.$(name).append(childView.el);
             }
             _results.push(childView.render());
           }
           return _results;
         } else {
-          _this.$(selector).replaceWith(view.el);
+          _this.$(name).replaceWith(view.el);
           return view.render();
         }
       });
