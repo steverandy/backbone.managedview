@@ -23,6 +23,9 @@
 
     ManagedView.prototype._configure = function(options) {
       this.views = options.views || {};
+      if (_(this.insert).isFunction()) {
+        this.insertOnce = _.once(this.insert);
+      }
       return ManagedView.__super__._configure.apply(this, arguments);
     };
 
@@ -30,8 +33,8 @@
       if (typeof this.beforeRender === "function") {
         this.beforeRender();
       }
-      if (typeof this.insert === "function") {
-        this.insert();
+      if (typeof this.insertOnce === "function") {
+        this.insertOnce();
       }
       this.$el.html(typeof this.template === "function" ? this.template(this) : void 0);
       this.renderViews();
@@ -75,7 +78,7 @@
     ManagedView.prototype.renderViews = function() {
       var _this = this;
       return _(this.views).each(function(view, name) {
-        var $el, childView, _i, _len, _results;
+        var $el, childView, insert, _i, _len, _results;
         $el = _this.$(name);
         if (name.length === 0) {
           $el = _this.$el;
@@ -84,9 +87,11 @@
           _results = [];
           for (_i = 0, _len = view.length; _i < _len; _i++) {
             childView = view[_i];
-            if (!(typeof childView.insert === "function" ? childView.insert($el) : void 0)) {
-              $el.append(childView.el);
+            insert = "append";
+            if (_(childView.insert).isString()) {
+              insert = childView.insert;
             }
+            $el[insert](childView.el);
             _results.push(childView.render());
           }
           return _results;

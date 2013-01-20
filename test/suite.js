@@ -32,8 +32,13 @@
 
           Layout.prototype.template = _.template("<header></header><div id='content'>test</div>");
 
+          Layout.prototype.initialize = function() {
+            return this.insertCount = 0;
+          };
+
           Layout.prototype.insert = function() {
-            return $("body").append(this.el);
+            $("body").append(this.el);
+            return this.insertCount += 1;
           };
 
           Layout.prototype.beforeRender = function() {
@@ -80,6 +85,8 @@
 
           Item.prototype.className = "item";
 
+          Item.prototype.insert = "prepend";
+
           Item.prototype.template = _.template("<p>item name</p>");
 
           return Item;
@@ -122,6 +129,15 @@
       equal(layout.afterRenderCalled, void 0);
       layout.render();
       return equal(layout.afterRenderCalled, true);
+    });
+    test("insert only once", function() {
+      var layout;
+      layout = new Layout;
+      equal(layout.insertCount, 0);
+      layout.render();
+      equal(layout.insertCount, 1);
+      layout.render();
+      return equal(layout.insertCount, 1);
     });
     module("remove", {
       setup: function() {

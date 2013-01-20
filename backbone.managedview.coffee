@@ -1,12 +1,14 @@
 class Backbone.ManagedView extends Backbone.View
   _configure: (options) ->
     @views = options.views || {}
+    if _(@insert).isFunction()
+      @insertOnce = _.once @insert
     super
 
   # Render view and its sub-views
   render: =>
     @beforeRender?()
-    @insert?()
+    @insertOnce?()
     @$el.html @template?(this)
     @renderViews()
     @afterRender?()
@@ -39,8 +41,10 @@ class Backbone.ManagedView extends Backbone.View
       $el = @$el if name.length is 0
       if _(view).isArray()
         for childView in view
-          unless childView.insert? $el
-            $el.append childView.el
+          insert = "append"
+          if _(childView.insert).isString()
+            insert = childView.insert
+          $el[insert] childView.el
           childView.render()
       else
         $el.replaceWith view.el

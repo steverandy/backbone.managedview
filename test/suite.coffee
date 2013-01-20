@@ -11,8 +11,11 @@ $ =>
       class @Layout extends Backbone.ManagedView
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
+        initialize: ->
+          @insertCount = 0
         insert: =>
           $("body").append @el
+          @insertCount += 1
         beforeRender: =>
           @beforeRenderCalled = true
         afterRender: =>
@@ -29,6 +32,7 @@ $ =>
 
       class @Item extends Backbone.ManagedView
         className: "item"
+        insert: "prepend"
         template: _.template("<p>item name</p>")
 
     teardown: =>
@@ -62,6 +66,14 @@ $ =>
     equal layout.afterRenderCalled, undefined
     layout.render()
     equal layout.afterRenderCalled, true
+
+  test "insert only once", =>
+    layout = new Layout
+    equal layout.insertCount, 0
+    layout.render()
+    equal layout.insertCount, 1
+    layout.render()
+    equal layout.insertCount, 1
 
   module "remove",
     setup: =>
