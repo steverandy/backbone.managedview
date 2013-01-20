@@ -87,7 +87,7 @@
           }
           return _results;
         } else {
-          _this.$(name).replaceWith(view.el);
+          view.setElement(_this.$(name));
           return view.render();
         }
       });
