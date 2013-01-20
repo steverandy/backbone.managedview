@@ -80,7 +80,7 @@
           _results = [];
           for (_i = 0, _len = view.length; _i < _len; _i++) {
             childView = view[_i];
-            if (!(typeof childView.insert === "function" ? childView.insert(_this.$(name)[0]) : void 0)) {
+            if (!(typeof childView.insert === "function" ? childView.insert(_this.$(name)) : void 0)) {
               _this.$(name).append(childView.el);
             }
             _results.push(childView.render());

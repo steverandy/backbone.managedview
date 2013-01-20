@@ -37,7 +37,7 @@ class Backbone.ManagedView extends Backbone.View
     _(@views).each (view, name) =>
       if _(view).isArray()
         for childView in view
-          unless childView.insert?(@$(name)[0])
+          unless childView.insert? @$(name)
             @$(name).append childView.el
           childView.render()
       else
