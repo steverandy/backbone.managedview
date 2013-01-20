@@ -75,19 +75,23 @@
     ManagedView.prototype.renderViews = function() {
       var _this = this;
       return _(this.views).each(function(view, name) {
-        var childView, _i, _len, _results;
+        var $el, childView, _i, _len, _results;
+        $el = _this.$(name);
+        if (name.length === 0) {
+          $el = _this.$el;
+        }
         if (_(view).isArray()) {
           _results = [];
           for (_i = 0, _len = view.length; _i < _len; _i++) {
             childView = view[_i];
-            if (!(typeof childView.insert === "function" ? childView.insert(_this.$(name)) : void 0)) {
-              _this.$(name).append(childView.el);
+            if (!(typeof childView.insert === "function" ? childView.insert($el) : void 0)) {
+              $el.append(childView.el);
             }
             _results.push(childView.render());
           }
           return _results;
         } else {
-          _this.$(name).replaceWith(view.el);
+          $el.replaceWith(view.el);
           return view.render();
         }
       });

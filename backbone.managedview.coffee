@@ -35,13 +35,15 @@ class Backbone.ManagedView extends Backbone.View
   # Render all view instances in @views and insert them to the DOM
   renderViews: =>
     _(@views).each (view, name) =>
+      $el = @$(name)
+      $el = @$el if name.length is 0
       if _(view).isArray()
         for childView in view
-          unless childView.insert? @$(name)
-            @$(name).append childView.el
+          unless childView.insert? $el
+            $el.append childView.el
           childView.render()
       else
-        @$(name).replaceWith view.el
+        $el.replaceWith view.el
         view.render()
 
   # Remove all view instances in @views
