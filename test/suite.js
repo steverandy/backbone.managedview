@@ -125,7 +125,6 @@
     });
     module("remove", {
       setup: function() {
-        $("body").append("<div id='app'></div>");
         _this.Layout = (function(_super) {
 
           __extends(Layout, _super);
@@ -142,7 +141,7 @@
           Layout.prototype.template = _.template("<header></header><div id='content'>test</div>");
 
           Layout.prototype.insert = function() {
-            return $("#app").replaceWith(this.el);
+            return $("body").append(this.el);
           };
 
           Layout.prototype.afterRemove = function() {

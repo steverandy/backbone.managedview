@@ -65,12 +65,11 @@ $ =>
 
   module "remove",
     setup: =>
-      $("body").append("<div id='app'></div>")
       class @Layout extends Backbone.ManagedView
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
         insert: =>
-          $("#app").replaceWith @el
+          $("body").append @el
         afterRemove: =>
           @afterRemoveCalled = true
 
