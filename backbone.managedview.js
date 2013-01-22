@@ -103,14 +103,13 @@
     };
 
     ManagedView.prototype.removeViews = function() {
-      var view, _i, _len, _ref, _results;
+      var view, _i, _len, _ref;
       _ref = this.collectViews();
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         view = _ref[_i];
-        _results.push(view.remove());
+        view.remove();
       }
-      return _results;
+      return this.views = {};
     };
 
     return ManagedView;
