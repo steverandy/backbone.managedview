@@ -55,3 +55,5 @@ class Backbone.ManagedView extends Backbone.View
     for view in @collectViews()
       view.remove()
     @views = {}
+
+Backbone.View = Backbone.ManagedView

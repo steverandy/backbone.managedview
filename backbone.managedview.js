@@ -116,4 +116,6 @@
 
   })(Backbone.View);
 
+  Backbone.View = Backbone.ManagedView;
+
 }).call(this);
