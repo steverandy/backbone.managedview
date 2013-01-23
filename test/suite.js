@@ -9,7 +9,7 @@
     module("default variables");
     test("views", function() {
       var view;
-      view = new Backbone.ManagedView;
+      view = new Backbone.View;
       view.views["header"] = "headerView";
       return equal(view.views["header"], "headerView");
     });
@@ -51,7 +51,7 @@
 
           return Layout;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
         _this.Header = (function(_super) {
 
           __extends(Header, _super);
@@ -74,7 +74,7 @@
 
           return Header;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
         return _this.Item = (function(_super) {
 
           __extends(Item, _super);
@@ -91,7 +91,7 @@
 
           return Item;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
       },
       teardown: function() {
         return $("#app").remove();
@@ -166,7 +166,7 @@
 
           return Layout;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
         return _this.Header = (function(_super) {
 
           __extends(Header, _super);
@@ -181,7 +181,7 @@
 
           return Header;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
       },
       teardown: function() {
         return $("#app").remove();
@@ -227,7 +227,7 @@
 
           return Layout;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
         _this.Header = (function(_super) {
 
           __extends(Header, _super);
@@ -238,7 +238,7 @@
 
           return Header;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
         _this.Footer = (function(_super) {
 
           __extends(Footer, _super);
@@ -249,7 +249,7 @@
 
           return Footer;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
         return _this.Item = (function(_super) {
 
           __extends(Item, _super);
@@ -260,7 +260,7 @@
 
           return Item;
 
-        })(Backbone.ManagedView);
+        })(Backbone.View);
       },
       teardown: function() {}
     });

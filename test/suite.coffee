@@ -2,13 +2,13 @@ $ =>
   module "default variables"
 
   test "views", =>
-    view = new Backbone.ManagedView
+    view = new Backbone.View
     view.views["header"] = "headerView"
     equal view.views["header"], "headerView"
 
   module "render",
     setup: =>
-      class @Layout extends Backbone.ManagedView
+      class @Layout extends Backbone.View
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
         initialize: ->
@@ -21,7 +21,7 @@ $ =>
         afterRender: =>
           @afterRenderCalled = true
 
-      class @Header extends Backbone.ManagedView
+      class @Header extends Backbone.View
         tagName: "header"
         template: _.template("<p>header</p><div id='items'></div>")
         beforeRender: =>
@@ -30,7 +30,7 @@ $ =>
           @views["#items"].push new Item
           @views["#items"].push new Item
 
-      class @Item extends Backbone.ManagedView
+      class @Item extends Backbone.View
         className: "item"
         insert: "prepend"
         template: _.template("<p>item name</p>")
@@ -77,7 +77,7 @@ $ =>
 
   module "remove",
     setup: =>
-      class @Layout extends Backbone.ManagedView
+      class @Layout extends Backbone.View
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
         insert: =>
@@ -85,7 +85,7 @@ $ =>
         afterRemove: =>
           @afterRemoveCalled = true
 
-      class @Header extends Backbone.ManagedView
+      class @Header extends Backbone.View
         tagName: "header"
         template: _.template("<p>header</p>")
 
@@ -119,10 +119,10 @@ $ =>
 
   module "utility functions",
     setup: =>
-      class @Layout extends Backbone.ManagedView
-      class @Header extends Backbone.ManagedView
-      class @Footer extends Backbone.ManagedView
-      class @Item extends Backbone.ManagedView
+      class @Layout extends Backbone.View
+      class @Header extends Backbone.View
+      class @Footer extends Backbone.View
+      class @Item extends Backbone.View
     teardown: =>
 
   test "collectViews", =>
