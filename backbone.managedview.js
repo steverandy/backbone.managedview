@@ -96,7 +96,9 @@
           }
           return _results;
         } else {
-          $el.replaceWith(view.el);
+          if (!view.insert) {
+            $el.replaceWith(view.el);
+          }
           return view.render();
         }
       });

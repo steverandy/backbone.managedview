@@ -47,7 +47,8 @@ class Backbone.ManagedView extends Backbone.View
           $el[insert] childView.el
           childView.render()
       else
-        $el.replaceWith view.el
+        unless view.insert
+          $el.replaceWith view.el
         view.render()
 
   # Remove all view instances in @views
