@@ -1,5 +1,6 @@
 class Backbone.ManagedView extends Backbone.View
   _configure: (options) ->
+    @insert ||= options.insert
     @views = options.views || {}
     if _(@insert).isFunction()
       @insertOnce = _.once @insert
