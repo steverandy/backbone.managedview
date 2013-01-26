@@ -22,7 +22,9 @@
     }
 
     ManagedView.prototype._configure = function(options) {
-      this.insert || (this.insert = options.insert);
+      if (options.insert) {
+        this.insert = options.insert;
+      }
       this.views = options.views || {};
       if (_(this.insert).isFunction()) {
         this.insertOnce = _.once(this.insert);
