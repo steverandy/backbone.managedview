@@ -101,7 +101,7 @@
       var layout;
       layout = new Layout;
       layout.render();
-      return equal("test", $("#app #content").html());
+      return equal($("#app #content").html(), "test");
     });
     test("render view and subviews", function() {
       var layout;

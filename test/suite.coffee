@@ -41,7 +41,7 @@ $ =>
   test "render view", =>
     layout = new Layout
     layout.render()
-    equal "test", $("#app #content").html()
+    equal $("#app #content").html(), "test"
 
   test "render view and subviews", =>
     layout = new Layout
