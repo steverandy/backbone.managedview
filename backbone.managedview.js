@@ -49,6 +49,9 @@
     };
 
     ManagedView.prototype.remove = function() {
+      if (typeof this.beforeRemove === "function") {
+        this.beforeRemove();
+      }
       ManagedView.__super__.remove.apply(this, arguments);
       this.removeViews();
       if (typeof this.afterRemove === "function") {
