@@ -52,8 +52,8 @@
       if (typeof this.beforeRemove === "function") {
         this.beforeRemove();
       }
-      ManagedView.__super__.remove.apply(this, arguments);
       this.removeViews();
+      ManagedView.__super__.remove.apply(this, arguments);
       if (typeof this.afterRemove === "function") {
         this.afterRemove();
       }

@@ -20,8 +20,8 @@ class Backbone.ManagedView extends Backbone.View
   # Remove view and its sub-views
   remove: =>
     @beforeRemove?()
-    super
     @removeViews()
+    super
     @afterRemove?()
     @trigger "remove"
     return this
