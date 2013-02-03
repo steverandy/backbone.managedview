@@ -17,7 +17,7 @@ insert: =>
   $("body").append @el
 ```
 
-For item view, insert should be defined as a string — `"append"` or `"prepend`. If not set by default the value will be set to `"append"`.
+For item view, insert should be defined as a string — `"append"` or `"prepend"`. The default value is `"append"`.
 
 ```coffee
 insert: "prepend"
@@ -45,7 +45,7 @@ listsView.views["#lists"] = []
 
 ### beforeRender
 
-It will be called the first during rendering process. Define this function when actions need to be performed before view element is inserted to the DOM or before template is executed.
+It will be called the first during [rendering process](#rendering-process). Define this function when actions need to be performed before view element is inserted to the DOM or before template is executed.
 
 ### afterRender
 
