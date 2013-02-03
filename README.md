@@ -128,6 +128,21 @@ class App.Views.Layout extends Backbone.View
     console.log "rendered layout"
 ```
 
+The code above defines top level view (a layout). It has two subviews, a header and a footer.
+
+```coffee
+layoutView = new App.Views.Layout
+layoutView.render()
+```
+
+Create a layout and render. By calling `render`, layout will be inserted to the DOM (in body element). The subviews (header and footer) will also be rendered and replace the header and footer elements.
+
+```coffee
+layoutView.remove()
+```
+
+When a layout view no longer needed, just call `remove`. It will call `remove` on all subviews and remove itself from the DOM.
+
 ## Test Suite
 
 Open `test/index.html` on a web browser to run the test suite.
