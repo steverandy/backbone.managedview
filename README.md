@@ -89,15 +89,14 @@ There are two events — `render` and `remove`. Use events when actions cannot b
 ```coffee
   class App.Views.Layout extends Backbone.View
     id: "app"
-    template: _.template("<header></header><div id='content'>test</div>")
+    template: _.template("<header></header><div id='content'></div><footer></footer>")
     manage: true
-
-    initialize: ->
+    views:
+      "header": new App.Views.Components.Header
+      "footer": new App.Views.Components.Footer
 
     insert: =>
       $("body").append @el
-
-    beforeRender: =>
 
     afterRender: =>
       console.log "rendered layout"
