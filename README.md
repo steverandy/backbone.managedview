@@ -28,19 +28,45 @@ insert: "prepend"
 It is a hash that keeps track of subviews. The key is the name of the view or a selector where the view will inserted to the DOM. The value is the subview object itself.
 
 ```coffee
-views:
-  "header.main": new App.Views.Components.MainHeader
-  "footer.main": new App.Views.Components.MainFooter
+layoutView = new App.Views.Layout
+layoutView.views["header.main"] = new App.Views.Components.MainHeader
+layoutView.views["#content"] = new App.Views.Lists
+layoutView.views["footer.main"] = new App.Views.Components.MainFooter
 ```
 
 The `views` hash value can also be an array. This can be used when constructing list type view.
 
 ```coffee
-listsView = new App.Views.Components.Lists
+listsView = new App.Views.Lists
 listsView.views["#lists"] = []
 @lists.each (list) =>
   listsView.views["#lists"].push new App.Views.Components.List
     model: list
+```
+
+#### Ways to set views
+
+```coffee
+class App.Views.Layout extends Backbone.View
+  views:
+    "#content": new App.Views.Lists
+```
+
+```coffee
+class App.Views.Layout extends Backbone.View
+  initialize: ->
+    @views["#content"] = new App.Views.Lists
+```
+
+```coffee
+layoutView = new App.Views.Layout
+  views:
+    "#content": new App.Views.Lists
+```
+
+```coffee
+layoutView = new App.Views.Layout
+layoutView.views["#content"] = new App.Views.Lists
 ```
 
 ### beforeRender
@@ -87,19 +113,19 @@ There are two events — `render` and `remove`. Use events when actions cannot b
 ## Example
 
 ```coffee
-  class App.Views.Layout extends Backbone.View
-    id: "app"
-    template: _.template("<header></header><div id='content'></div><footer></footer>")
-    manage: true
-    views:
-      "header": new App.Views.Components.Header
-      "footer": new App.Views.Components.Footer
+class App.Views.Layout extends Backbone.View
+  id: "app"
+  template: _.template("<header></header><div id='content'></div><footer></footer>")
+  manage: true
+  views:
+    "header": new App.Views.Components.Header
+    "footer": new App.Views.Components.Footer
 
-    insert: =>
-      $("body").append @el
+  insert: =>
+    $("body").append @el
 
-    afterRender: =>
-      console.log "rendered layout"
+  afterRender: =>
+    console.log "rendered layout"
 ```
 
 ## Test Suite
