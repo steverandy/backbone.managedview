@@ -1,8 +1,8 @@
 # backbone.managedview
 
-It is an extension for Backbone.View, which adds views management logic and structure.
+It is an extension for Backbone.View, which adds views management logic and structure. It's common for a view to have multiple subviews, but in Backbone.View managing subviews has to be done manually. This extension manages rendering a view and its subviews. When a view is removed, this extension also manages the subviews removal.
 
-## Properties and Methods
+## API
 
 ### manage
 
@@ -10,7 +10,7 @@ When set to `true`, view rendering and removing will be managed. Set to `false` 
 
 ### insert
 
-For top level view, insert should be defined as a function.
+It determines how a view will be inserted to the DOM. For top level view, insert should be defined as a function.
 
 ```coffee
 insert: =>
@@ -25,7 +25,7 @@ insert: "prepend"
 
 ### views
 
-`views` is a hash that keep track of subviews. The key is the name of the view or a selector where the view will inserted to the DOM. The value is the subview object itself.
+It is a hash that keeps track of subviews. The key is the name of the view or a selector where the view will inserted to the DOM. The value is the subview object itself.
 
 ```coffee
 views:
@@ -45,25 +45,27 @@ listsView.views["#lists"] = []
 
 ### beforeRender
 
-Define this function and it will be called the first during rendering process before DOM insertion and template execution.
+It will be called the first during rendering process. Define this function when actions need to be performed before view element is inserted to the DOM or before template is executed.
 
 ### afterRender
 
-Define this function and it will be called after DOM insertion, template execution, and subviews rendering.
+It will be called the last during rendering process. Define this functon when actions need to be performed after view element has been inserted to the DOM, template has been executed and subviews have been rendered. For example to setup a jQuery sortable.
 
 ### beforeRemove
 
-Define this function and it will be called the first during removing process.
+It will be called the first during removing process.
 
 ### afterRemove
 
-Define this function and it will be called after all subviews have been removed.
+It will be called the last during removing process.
 
 ## Events
 
-## render
+There are two events — `render` and `remove`. Use events when actions cannot be performed in the rendering or removing callbacks.
 
-Rendering steps:
+## Rendering Process
+
+`render` function is predefined, therefore there is no need to define it manually. Rendering process uses the following steps:
 
 1. Call `beforeRender`
 2. Insert to DOM
@@ -72,9 +74,9 @@ Rendering steps:
 5. Call `afterRender`
 6. Trigger `render` event
 
-## remove
+## Removing Process
 
-Removing steps:
+`remove` function is also prefined like `render`. The process uses the following steps:
 
 1. Call `beforeRemove`
 2. Remove subviews
@@ -88,9 +90,9 @@ Removing steps:
   class App.Views.Layout extends Backbone.View
     id: "app"
     template: _.template("<header></header><div id='content'>test</div>")
+    manage: true
 
     initialize: ->
-      @insertCount = 0
 
     insert: =>
       $("body").append @el
