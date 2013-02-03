@@ -32,6 +32,8 @@
 
           Layout.prototype.template = _.template("<header></header><div id='content'>test</div>");
 
+          Layout.prototype.manage = true;
+
           Layout.prototype.initialize = function() {
             return this.insertCount = 0;
           };
@@ -65,6 +67,8 @@
 
           Header.prototype.template = _.template("<p>header</p><div id='items'></div>");
 
+          Header.prototype.manage = true;
+
           Header.prototype.beforeRender = function() {
             _(this.views["#items"]).invoke("remove");
             this.views["#items"] = [];
@@ -85,9 +89,11 @@
 
           Item.prototype.className = "item";
 
-          Item.prototype.insert = "prepend";
-
           Item.prototype.template = _.template("<p>item name</p>");
+
+          Item.prototype.manage = true;
+
+          Item.prototype.insert = "prepend";
 
           return Item;
 
@@ -156,6 +162,8 @@
 
           Layout.prototype.template = _.template("<header></header><div id='content'>test</div>");
 
+          Layout.prototype.manage = true;
+
           Layout.prototype.insert = function() {
             return $("body").append(this.el);
           };
@@ -178,6 +186,8 @@
           Header.prototype.tagName = "header";
 
           Header.prototype.template = _.template("<p>header</p>");
+
+          Header.prototype.manage = true;
 
           return Header;
 

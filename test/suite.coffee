@@ -11,6 +11,7 @@ $ =>
       class @Layout extends Backbone.View
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
+        manage: true
         initialize: ->
           @insertCount = 0
         insert: =>
@@ -24,6 +25,7 @@ $ =>
       class @Header extends Backbone.View
         tagName: "header"
         template: _.template("<p>header</p><div id='items'></div>")
+        manage: true
         beforeRender: =>
           _(@views["#items"]).invoke "remove"
           @views["#items"] = []
@@ -32,8 +34,9 @@ $ =>
 
       class @Item extends Backbone.View
         className: "item"
-        insert: "prepend"
         template: _.template("<p>item name</p>")
+        manage: true
+        insert: "prepend"
 
     teardown: =>
       $("#app").remove()
@@ -80,6 +83,7 @@ $ =>
       class @Layout extends Backbone.View
         id: "app"
         template: _.template("<header></header><div id='content'>test</div>")
+        manage: true
         insert: =>
           $("body").append @el
         afterRemove: =>
@@ -88,6 +92,7 @@ $ =>
       class @Header extends Backbone.View
         tagName: "header"
         template: _.template("<p>header</p>")
+        manage: true
 
     teardown: =>
       $("#app").remove()

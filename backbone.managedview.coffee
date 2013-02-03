@@ -9,6 +9,9 @@ class Backbone.ManagedView extends Backbone.View
 
   # Render view and its sub-views
   render: =>
+    unless @manage
+      super
+      return
     @beforeRender?()
     @insertOnce?()
     @$el.html @template?(this)
@@ -19,6 +22,9 @@ class Backbone.ManagedView extends Backbone.View
 
   # Remove view and its sub-views
   remove: =>
+    unless @manage
+      super
+      return
     @beforeRemove?()
     @removeViews()
     super
