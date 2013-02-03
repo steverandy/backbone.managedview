@@ -1,5 +1,3 @@
-# backbone.managedview
-
 It is an extension for Backbone.View, which adds views management logic and structure. It's common for a view to have multiple subviews, but in Backbone.View managing subviews has to be done manually. This extension manages rendering a view and its subviews. When a view is removed, this extension also manages the subviews removal.
 
 ## API
