@@ -4,6 +4,29 @@ It is an extension for Backbone.View, which adds views management logic and stru
 
 ## Usage
 
+backbone.managedview adds properties and methods to Backbone.View
+
+### manage
+
+When set to `true`, view rendering and removing will be managed. Set to `false` if you need the default behavior of Backbone.View.
+
+### insert
+
+For top level view, insert should be defined as a function.
+
+```coffee
+insert: =>
+  $("body").append @el
+```
+
+For item view, insert should be defined as a string — `"append"` or `"prepend`. If not set by default the value will be set to `"append"`.
+
+```coffee
+insert: "append"
+```
+
+## Example
+
 ```coffee
   class App.Views.Layout extends Backbone.View
     id: "app"
