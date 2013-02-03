@@ -49,15 +49,15 @@ It will be called the first during [rendering process](#rendering-process). Defi
 
 ### afterRender
 
-It will be called the last during rendering process. Define this functon when actions need to be performed after view element has been inserted to the DOM, template has been executed and subviews have been rendered. For example to setup a jQuery sortable.
+It will be called the last during [rendering process](#rendering-process). Define this functon when actions need to be performed after view element has been inserted to the DOM, template has been executed and subviews have been rendered. For example to setup a jQuery sortable.
 
 ### beforeRemove
 
-It will be called the first during removing process.
+It will be called the first during [removing process](#removing-process).
 
 ### afterRemove
 
-It will be called the last during removing process.
+It will be called the last during [removing process](#removing-process).
 
 ## Events
 
