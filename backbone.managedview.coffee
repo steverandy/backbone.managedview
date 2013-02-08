@@ -16,6 +16,7 @@ class Backbone.ManagedView extends Backbone.View
       return
     @beforeRender?()
     @insertOnce?()
+    @delegateEvents()
     @$el.html @template?(this)
     @renderViews()
     @afterRender?()

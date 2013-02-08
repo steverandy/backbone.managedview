@@ -46,6 +46,7 @@
       if (typeof this.insertOnce === "function") {
         this.insertOnce();
       }
+      this.delegateEvents();
       this.$el.html(typeof this.template === "function" ? this.template(this) : void 0);
       this.renderViews();
       if (typeof this.afterRender === "function") {
