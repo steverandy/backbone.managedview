@@ -96,21 +96,20 @@
     ManagedView.prototype.renderViews = function() {
       var _this = this;
       return _(this.views).each(function(view, name) {
-        var $el, insert, viewElements, _ref;
+        var $el, insert, _ref;
         $el = _this.$(name);
         if (name.length === 0) {
           $el = _this.$el;
         }
         if (_.isArray(view)) {
-          viewElements = _.pluck(view, "el");
           insert = ((_ref = view[0]) != null ? _ref.insert : void 0) || "append";
-          $el[insert](viewElements);
-          return _.invoke(view, "render");
+          _.invoke(view, "render");
+          return $el[insert](_.pluck(view, "el"));
         } else {
+          view.render();
           if (!view.insert) {
-            $el.replaceWith(view.el);
+            return $el.replaceWith(view.el);
           }
-          return view.render();
         }
       });
     };

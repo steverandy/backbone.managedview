@@ -52,14 +52,13 @@ class Backbone.ManagedView extends Backbone.View
       $el = @$ name
       $el = @$el if name.length is 0
       if _.isArray view
-        viewElements = _.pluck view, "el"
         insert = view[0]?.insert or "append"
-        $el[insert] viewElements
         _.invoke view, "render"
+        $el[insert] _.pluck(view, "el")
       else
+        view.render()
         unless view.insert
           $el.replaceWith view.el
-        view.render()
 
   # Remove all view instances in @views
   removeViews: =>
