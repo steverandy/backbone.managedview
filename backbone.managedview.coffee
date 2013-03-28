@@ -65,8 +65,7 @@ class Backbone.ManagedView extends Backbone.View
 
   # Remove all view instances in @views
   removeViews: =>
-    for view in @collectViews()
-      view.remove()
+    _.invoke @collectViews(), "remove"
     @views = {}
 
 Backbone.View = Backbone.ManagedView
