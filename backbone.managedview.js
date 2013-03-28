@@ -74,44 +74,47 @@
     };
 
     ManagedView.prototype.collectViews = function() {
-      var views,
-        _this = this;
+      var name, view, viewChild, views, _i, _len, _ref;
       views = [];
-      _(this.views).each(function(view, name) {
-        var viewChild, _i, _len, _results;
+      _ref = this.views;
+      for (name in _ref) {
+        view = _ref[name];
         if (_.isArray(view)) {
-          _results = [];
           for (_i = 0, _len = view.length; _i < _len; _i++) {
             viewChild = view[_i];
-            _results.push(views.push(viewChild));
+            views.push(viewChild);
           }
-          return _results;
         } else {
-          return views.push(view);
+          views.push(view);
         }
-      });
+      }
       return views;
     };
 
     ManagedView.prototype.renderViews = function() {
-      var _this = this;
-      return _(this.views).each(function(view, name) {
-        var $el, insert, _ref;
-        $el = _this.$(name);
+      var $el, insert, name, view, _ref, _ref1, _results;
+      _ref = this.views;
+      _results = [];
+      for (name in _ref) {
+        view = _ref[name];
+        $el = this.$(name);
         if (name.length === 0) {
-          $el = _this.$el;
+          $el = this.$el;
         }
         if (_.isArray(view)) {
-          insert = ((_ref = view[0]) != null ? _ref.insert : void 0) || "append";
+          insert = ((_ref1 = view[0]) != null ? _ref1.insert : void 0) || "append";
           _.invoke(view, "render");
-          return $el[insert](_.pluck(view, "el"));
+          _results.push($el[insert](_.pluck(view, "el")));
         } else {
           view.render();
           if (!view.insert) {
-            return $el.replaceWith(view.el);
+            _results.push($el.replaceWith(view.el));
+          } else {
+            _results.push(void 0);
           }
         }
-      });
+      }
+      return _results;
     };
 
     ManagedView.prototype.removeViews = function() {

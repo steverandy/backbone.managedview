@@ -38,7 +38,7 @@ class Backbone.ManagedView extends Backbone.View
   # Collect all view instances and return as a flat array
   collectViews: =>
     views = []
-    _(@views).each (view, name) =>
+    for name, view of @views
       if _.isArray view
         for viewChild in view
           views.push viewChild
@@ -48,8 +48,8 @@ class Backbone.ManagedView extends Backbone.View
 
   # Render all view instances in @views and insert them to the DOM
   renderViews: =>
-    _(@views).each (view, name) =>
-      $el = @$ name
+    for name, view of @views
+      $el = @$(name)
       $el = @$el if name.length is 0
       if _.isArray view
         insert = view[0]?.insert or "append"
