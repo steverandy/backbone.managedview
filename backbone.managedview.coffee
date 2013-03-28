@@ -5,7 +5,7 @@ class Backbone.ManagedView extends Backbone.View
       @views = options.views
     if options.insert
       @insert = options.insert
-    if _(@insert).isFunction()
+    if _.isFunction @insert
       @insertOnce = _.once @insert
     super
 
@@ -39,7 +39,7 @@ class Backbone.ManagedView extends Backbone.View
   collectViews: =>
     views = []
     _(@views).each (view, name) =>
-      if _(view).isArray()
+      if _.isArray view
         for viewChild in view
           views.push viewChild
       else

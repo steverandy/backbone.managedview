@@ -29,7 +29,7 @@
       if (options.insert) {
         this.insert = options.insert;
       }
-      if (_(this.insert).isFunction()) {
+      if (_.isFunction(this.insert)) {
         this.insertOnce = _.once(this.insert);
       }
       return ManagedView.__super__._configure.apply(this, arguments);
@@ -79,7 +79,7 @@
       views = [];
       _(this.views).each(function(view, name) {
         var viewChild, _i, _len, _results;
-        if (_(view).isArray()) {
+        if (_.isArray(view)) {
           _results = [];
           for (_i = 0, _len = view.length; _i < _len; _i++) {
             viewChild = view[_i];
