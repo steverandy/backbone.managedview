@@ -47,7 +47,7 @@
         this.insertOnce();
       }
       this.delegateEvents();
-      this.$el.html(typeof this.template === "function" ? this.template(this) : void 0);
+      this.$el.empty().append(typeof this.template === "function" ? this.template(this) : void 0);
       this.renderViews();
       if (typeof this.afterRender === "function") {
         this.afterRender();
@@ -74,15 +74,15 @@
     };
 
     ManagedView.prototype.collectViews = function() {
-      var name, view, viewChild, views, _i, _len, _ref;
+      var childView, name, view, views, _i, _len, _ref;
       views = [];
       _ref = this.views;
       for (name in _ref) {
         view = _ref[name];
         if (_.isArray(view)) {
           for (_i = 0, _len = view.length; _i < _len; _i++) {
-            viewChild = view[_i];
-            views.push(viewChild);
+            childView = view[_i];
+            views.push(childView);
           }
         } else {
           views.push(view);
@@ -92,7 +92,7 @@
     };
 
     ManagedView.prototype.renderViews = function() {
-      var $el, insert, name, view, _ref, _ref1, _results;
+      var $el, childView, insert, name, view, _ref, _results;
       _ref = this.views;
       _results = [];
       for (name in _ref) {
@@ -102,16 +102,22 @@
           $el = this.$el;
         }
         if (_.isArray(view)) {
-          insert = ((_ref1 = view[0]) != null ? _ref1.insert : void 0) || "append";
-          _.invoke(view, "render");
-          _results.push($el[insert](_.pluck(view, "el")));
+          _results.push((function() {
+            var _i, _len, _results1;
+            _results1 = [];
+            for (_i = 0, _len = view.length; _i < _len; _i++) {
+              childView = view[_i];
+              insert = childView.insert || "append";
+              $el[insert](childView.el);
+              _results1.push(childView.render());
+            }
+            return _results1;
+          })());
         } else {
-          view.render();
           if (!view.insert) {
-            _results.push($el.replaceWith(view.el));
-          } else {
-            _results.push(void 0);
+            $el.replaceWith(view.el);
           }
+          _results.push(view.render());
         }
       }
       return _results;

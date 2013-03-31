@@ -17,7 +17,7 @@ class Backbone.ManagedView extends Backbone.View
     @beforeRender?()
     @insertOnce?()
     @delegateEvents()
-    @$el.html @template?(this)
+    @$el.empty().append @template?(this)
     @renderViews()
     @afterRender?()
     @trigger "render"
@@ -40,8 +40,8 @@ class Backbone.ManagedView extends Backbone.View
     views = []
     for name, view of @views
       if _.isArray view
-        for viewChild in view
-          views.push viewChild
+        for childView in view
+          views.push childView
       else
         views.push view
     return views
@@ -52,13 +52,14 @@ class Backbone.ManagedView extends Backbone.View
       $el = @$(name)
       $el = @$el if name.length is 0
       if _.isArray view
-        insert = view[0]?.insert or "append"
-        _.invoke view, "render"
-        $el[insert] _.pluck(view, "el")
+        for childView in view
+          insert = childView.insert or "append"
+          $el[insert] childView.el
+          childView.render()
       else
-        view.render()
         unless view.insert
           $el.replaceWith view.el
+        view.render()
 
   # Remove all view instances in @views
   removeViews: =>
