@@ -37,8 +37,7 @@
 
     ManagedView.prototype.render = function() {
       if (!this.manage) {
-        ManagedView.__super__.render.apply(this, arguments);
-        return;
+        return ManagedView.__super__.render.apply(this, arguments);
       }
       if (typeof this.beforeRender === "function") {
         this.beforeRender();
@@ -58,8 +57,7 @@
 
     ManagedView.prototype.remove = function() {
       if (!this.manage) {
-        ManagedView.__super__.remove.apply(this, arguments);
-        return;
+        return ManagedView.__super__.remove.apply(this, arguments);
       }
       if (typeof this.beforeRemove === "function") {
         this.beforeRemove();
