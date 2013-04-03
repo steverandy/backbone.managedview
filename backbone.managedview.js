@@ -39,6 +39,9 @@
       if (!this.manage) {
         return ManagedView.__super__.render.apply(this, arguments);
       }
+      if (typeof this.filter === "function" ? this.filter() : void 0) {
+        return;
+      }
       if (typeof this.insertOnce === "function") {
         this.insertOnce();
       }
