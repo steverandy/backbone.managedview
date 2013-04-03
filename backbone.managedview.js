@@ -39,13 +39,13 @@
       if (!this.manage) {
         return ManagedView.__super__.render.apply(this, arguments);
       }
-      if (typeof this.beforeRender === "function") {
-        this.beforeRender();
-      }
       if (typeof this.insertOnce === "function") {
         this.insertOnce();
       }
       this.delegateEvents();
+      if (typeof this.beforeRender === "function") {
+        this.beforeRender();
+      }
       this.$el.empty().append(typeof this.template === "function" ? this.template(this) : void 0);
       this.renderViews();
       if (typeof this.afterRender === "function") {

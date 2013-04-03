@@ -12,9 +12,9 @@ class Backbone.ManagedView extends Backbone.View
   # Render view and its sub-views
   render: =>
     return super unless @manage
-    @beforeRender?()
     @insertOnce?()
     @delegateEvents()
+    @beforeRender?()
     @$el.empty().append @template?(this)
     @renderViews()
     @afterRender?()
