@@ -3,8 +3,7 @@ $ =>
 
   test "views", =>
     view = new Backbone.View
-    view.views["header"] = "headerView"
-    equal view.views["header"], "headerView"
+    deepEqual view.views, {}
 
   module "render",
     setup: =>
@@ -27,7 +26,7 @@ $ =>
         template: _.template("<p>header</p><div id='items'></div>")
         manage: true
         beforeRender: =>
-          _(@views["#items"]).invoke "remove"
+          _.invoke @views["#items"], "remove"
           @views["#items"] = []
           @views["#items"].push new Item
           @views["#items"].push new Item

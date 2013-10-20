@@ -1,18 +1,15 @@
-class Backbone.ManagedView extends Backbone.View
-  _configure: (options) ->
-    @views ||= {}
-    if options.views
-      @views = options.views
-    if options.insert
-      @insert = options.insert
+class Backbone.View extends Backbone.View
+  constructor: (options={}) ->
+    @views = {}
+    _.extend this, _.pick(options, ["views", "insert"])
     if _.isFunction @insert
       @insertOnce = _.once @insert
-    super
+    super options
 
   # Render view and its sub-views
   render: =>
-    return super unless @manage
-    return if @filter?()
+    unless @manage then return super
+    if @filter?() then return false
     @insertOnce?()
     @delegateEvents()
     @beforeRender?()
@@ -24,7 +21,7 @@ class Backbone.ManagedView extends Backbone.View
 
   # Remove view and its sub-views
   remove: =>
-    return super unless @manage
+    unless @manage then return super
     @beforeRemove?()
     @removeViews()
     super
@@ -62,5 +59,3 @@ class Backbone.ManagedView extends Backbone.View
   removeViews: =>
     _.invoke @collectViews(), "remove"
     @views = {}
-
-Backbone.View = Backbone.ManagedView
