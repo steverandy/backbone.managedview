@@ -57,5 +57,6 @@ class Backbone.View extends Backbone.View
 
   # Remove all view instances in @views
   removeViews: =>
-    _.invoke @collectViews(), "remove"
+    for view in @collectViews()
+      view?.remove?()
     @views = {}
